@@ -1,0 +1,93 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="money.css" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+<script>
+    (function(){
+        var b="orientationchange" in window ?"orientationchange":"resize";
+
+        var d=function(){
+            var h=document.documentElement.clientWidth;
+            if(!h){return}
+            var g=(h/320)*20;
+        console.log(g)
+            document.documentElement.style.fontSize=(g>40?40:g)+"px";
+        }
+        if(!document.addEventListener){return}
+        window.addEventListener(b,d,false);
+        d();
+    })()
+</script>
+</head>
+<body>
+<div class="money-warpper">
+    <!-- <div class="money-gift" style="right:0;"><img src="images/petal1.png" alt="" /></div> -->
+</div>
+<div class="toast">
+    <div class="sen">
+        <img src="images/gx.png">
+        <h3>获得3元红包</h3>
+        <a class="toast-btn">确定</a>
+    </div>
+</div>
+<div class="backward">
+    <span></span>
+</div>
+</body>
+<script>
+    (function(){
+        var win=parseInt($(".money-warpper").width()-60);
+        var height=$(document).height();
+        var toast=parseInt($(".toast").height())/2
+        var num=0;
+        $(".money-warpper").height(height);
+        $(".toast").css("margin-top","-"+toast+"px");
+        var add=function(){
+            var wh=parseInt(Math.random()*(113-70)+60);
+            var rot=parseInt(Math.random()*100+45)+"deg";
+            var left=parseInt(Math.random()*win);
+            var imgNum=parseInt(Math.random()*(10-1)+1)
+            num++;
+            $(".money-warpper").append("<div class='money-gift"+num+"'><img src='images/petal"+imgNum+".png' /></li>");
+            $(".money-gift"+num).css({
+                "left":left,
+                "top":"-100px"
+            })
+            $(".money-gift"+num).find("img").css({
+                "width":wh+"px",
+                "transform":"rotate("+rot+")",
+                "-webkit-transform":"rotate("+rot+")",
+                "-moz-transform":"rotate("+rot+")",
+                "-ms-transform":"rotate("+rot+")",
+                "-o-transform":"rotate("+rot+")"
+            })
+            $(".money-gift"+num).animate({'top':height},5000,function(){
+                this.remove();
+            })
+            var clear2=setTimeout(add,500);
+            $(".money-gift"+num).click(function(){
+                $(".toast").show();
+                this.remove();
+                clearTimeout(clear2,500);
+            })
+        }
+        add();
+        var clear=setTimeout(add,3000);
+
+        $(".toast-btn").click(function(){
+            $(".toast").hide();
+            clearTimeout(clear,500);
+
+        })
+
+    })()
+</script>
+</html>
